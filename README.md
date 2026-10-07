@@ -1,19 +1,29 @@
 # Desafio Power BI — Financial Sample
 
-Relatório do desafio de Power BI Analyst, com as duas páginas de referência preservadas e a terceira página criada para analisar vendas e lucro por país e segmento.
+Projetos dos desafios de Power BI Analyst baseados na amostra financeira.
 
 ## Entrega
 
-- `Financial_Sample.pbix`: relatório editável do Power BI Desktop.
+- `Financial_Sample_Interactive_Report.pbix`: relatório editável de duas páginas com navegação e visuais interativos.
+- `Financial_Sample.pbix`: relatório do desafio anterior, com as duas páginas de referência e a análise geográfica.
 - `data/financial_sample.xlsx`: amostra financeira usada no desafio.
 
-Abra `Financial_Sample.pbix` no Power BI Desktop. A página **Análise geográfica** contém:
+### Relatório interativo
+
+Abra `Financial_Sample_Interactive_Report.pbix` no Power BI Desktop. O relatório contém:
+
+1. **Visão geral de vendas** — indicadores e visuais de vendas por segmento, produto e país; segmentador de data; botões de favoritos para alternar entre gráfico de barras e pizza e entre mapa e treemap.
+2. **Análise de lucro** — árvore de decomposição, variação trimestral, lucro por produto e segmento; segmentador de ano e botão para voltar à visão geral.
+
+### Relatório do desafio anterior
+
+A página **Análise geográfica** em `Financial_Sample.pbix` contém:
 
 1. **Vendas e unidades vendidas por país** — mapa com vendas no tamanho das bolhas e unidades vendidas nas dicas de ferramenta.
 2. **Lucro total por país** — mapa preenchido, colorido pelo lucro total.
 3. **Lucro por segmento** — gráfico de pizza com valores e percentuais.
 
-Os títulos e as dicas de ferramenta identificam as métricas diretamente. O relatório usa os campos `Country`, ` Sales`, `Units Sold`, `Profit` e `Segment` da tabela financeira. O nome da coluna de vendas no arquivo de origem contém um espaço inicial (` Sales`).
+Os relatórios usam os campos `Country`, ` Sales`, `Units Sold`, `Profit`, `Segment`, `Product` e `Date` da amostra. O nome da coluna de vendas no arquivo de origem contém um espaço inicial (` Sales`).
 
 ## Publicar e compartilhar
 

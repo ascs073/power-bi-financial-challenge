@@ -1,5 +1,5 @@
 table EmployeesByManager
-	lineageTag: 1f175ef8-6b7e-4e5f-98e4-366279c30ba0
+	lineageTag: 28903695-6b31-4ace-b767-d387a76ed7f2
 
 	column ManagerName
 		dataType: string

@@ -1,5 +1,5 @@
 table DepartmentLocations
-	lineageTag: 58634242-9f7e-4423-ae8a-055c74f41a52
+	lineageTag: 57c4f5d9-824c-4d37-a71d-48d10dd2e404
 
 	column DepartmentLocationKey
 		dataType: string

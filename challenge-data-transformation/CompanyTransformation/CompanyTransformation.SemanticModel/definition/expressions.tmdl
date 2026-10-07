@@ -1,6 +1,6 @@
 expression DataFolder =
 		"C:\Users\oem\Desktop\pbidados\power-bi-financial-challenge\challenge-data-transformation\data\raw" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
-	lineageTag: f2e890ce-6976-4e79-a971-cdbb9cd22bad
+	lineageTag: 09b24bf8-0a25-4148-97c3-fe8a7c9e753f
 	queryGroup: Parameters
 	annotation PBI_NavigationStepName = Navigation
 	annotation PBI_ResultType = Text
@@ -16,7 +16,7 @@ expression CompanyCsv =
 		        Typed = Table.TransformColumnTypes(Headers, columnTypes, "en-US")
 		    in
 		        Typed
-	lineageTag: 3e07841c-d9e1-4553-ae89-3a0e2fbe2455
+	lineageTag: 3a57f5bf-d982-416f-a679-4e72bceaead0
 	queryGroup: Tables
 	annotation PBI_NavigationStepName = Navigation
 	annotation PBI_ResultType = Function

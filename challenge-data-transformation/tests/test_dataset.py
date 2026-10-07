@@ -119,8 +119,12 @@ class CompanySampleTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
+        page_directories = list(
+            (report_dir / "definition" / "pages").glob("*.Page")
+        )
 
         self.assertEqual(len(pages["pageOrder"]), 2)
+        self.assertEqual(len(page_directories), 2)
         self.assertTrue((model_dir / "definition.pbism").is_file())
         table_names = {
             path.stem

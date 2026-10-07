@@ -133,4 +133,3 @@ select Fname, Lname, Address from employee, departament
 -- definindo alias para legibilidade da consulta
 select e.Fname, e.Lname, e.Address from employee e, departament d
 	where d.Dname = 'Research' and d.Dnumber = e.Dno;
-

@@ -1,5 +1,5 @@
 table Employees
-	lineageTag: 91a8dd35-504b-4174-9c75-647e41de45ec
+	lineageTag: e4708237-acc3-475b-a0b1-315e01acbe03
 
 	column EmployeeSSN
 		dataType: string

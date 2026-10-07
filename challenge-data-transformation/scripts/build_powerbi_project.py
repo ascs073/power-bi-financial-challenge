@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import uuid
 from pathlib import Path
 
@@ -159,8 +160,7 @@ def create_model(expressions: dict[str, str]) -> None:
         "queryGroup Tables\n"
         "\tannotation PBI_QueryGroupOrder = 1\n"
         "\n"
-        + "".join(f"ref table {name}\n" for name in TABLES)
-        + "\n",
+        + "".join(f"ref table {name}\n" for name in TABLES),
         encoding="utf-8",
     )
     expression_text: list[str] = []
@@ -264,6 +264,9 @@ def table_visual(name: str, entity: str, fields: list[str], position: dict[str, 
 def create_report() -> None:
     report_definition = REPORT_DIR / "definition"
     pages_dir = report_definition / "pages"
+    if pages_dir.exists():
+        shutil.rmtree(pages_dir)
+    pages_dir.mkdir(parents=True, exist_ok=True)
     page1_id = uuid.uuid4().hex[:20]
     page2_id = uuid.uuid4().hex[:20]
     (REPORT_DIR / "definition.pbir").parent.mkdir(parents=True, exist_ok=True)

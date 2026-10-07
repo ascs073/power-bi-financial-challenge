@@ -1,5 +1,5 @@
 table QualityChecks
-	lineageTag: 10f4532b-0fb6-466d-988c-c5f54c7a560f
+	lineageTag: 1593e7ca-d70d-4838-b0ac-b7745cc68f40
 
 	column Check
 		dataType: string

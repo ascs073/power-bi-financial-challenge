@@ -1,0 +1,7 @@
+ProjectNumber,ProjectName,ProjectLocation,DepartmentNumber,DepartmentName,TotalHours
+1,ProductX,Bellaire,5,Research,52.5
+2,ProductY,Sugarland,5,Research,37.5
+3,ProductZ,Houston,5,Research,50.0
+10,Computerization,Stafford,4,Administration,55.0
+20,Reorganization,Houston,1,Headquarters,25.0
+30,Newbenefits,Stafford,4,Administration,55.0

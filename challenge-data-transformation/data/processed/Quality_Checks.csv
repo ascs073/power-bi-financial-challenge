@@ -1,0 +1,10 @@
+Check,Observed,Expected,Status,Details
+Employees with no supervisor,1,1 top-level employee (CEO),Expected,James E. Borg is the CEO in the sample; a blank Super_ssn is intentional.
+Departments without a valid manager,0,0,Pass,All three departments have a manager present in the employee table.
+Employees without a matching department,0,0,Pass,Employee-to-department enrichment uses a left outer join.
+Employees with an invalid supervisor reference,0,0,Pass,The CEO's null supervisor is not an invalid reference.
+Employees with a null salary,0,0,Pass,Salary is kept as a fixed-precision decimal (currency).
+Malformed employee addresses,0,0,Pass,"Addresses are split into number, street, city and state."
+Duplicate department-location combinations,0,0,Pass,Department number and location form the composite key.
+Project assignments with zero hours,1,Review zero-hour assignments; do not discard silently,Review,A zero-hour assignment is retained because it is present in the source.
+Project assignments with negative hours,0,0,Pass,Negative hours would require confirmation from the data owner.

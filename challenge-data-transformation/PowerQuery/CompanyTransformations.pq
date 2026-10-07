@@ -1,0 +1,395 @@
+section CompanyData;
+
+shared DataFolder = "C:\CAMINHO\DO\PROJETO\challenge-data-transformation\data\raw"
+    meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true];
+
+shared CompanyCsv = (fileName as text, columnTypes as list) as table =>
+    let
+        Source = Csv.Document(
+            File.Contents(DataFolder & "\" & fileName),
+            [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+        ),
+        Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+        Typed = Table.TransformColumnTypes(Headers, columnTypes, "en-US")
+    in
+        Typed;
+
+shared Employees_Raw =
+    let
+        Source = CompanyCsv(
+            "employee.csv",
+            {
+                {"Fname", type text}, {"Minit", type text}, {"Lname", type text},
+                {"Ssn", type text}, {"Bdate", type date}, {"Address", type text},
+                {"Sex", type text}, {"Salary", type number}, {"Super_ssn", type text},
+                {"Dno", Int64.Type}
+            }
+        ),
+        NullSupervisor = Table.TransformColumns(
+            Source,
+            {{"Super_ssn", each if _ = null or _ = "" then null else _, type nullable text}}
+        )
+    in
+        NullSupervisor;
+
+shared Departments_Raw = CompanyCsv(
+    "departament.csv",
+    {
+        {"Dname", type text}, {"Dnumber", Int64.Type}, {"Mgr_ssn", type text},
+        {"Mgr_start_date", type date}, {"Dept_create_date", type date}
+    }
+);
+
+shared DepartmentLocations_Raw = CompanyCsv(
+    "dept_locations.csv",
+    {{"Dnumber", Int64.Type}, {"Dlocation", type text}}
+);
+
+shared Projects_Raw = CompanyCsv(
+    "project.csv",
+    {
+        {"Pname", type text}, {"Pnumber", Int64.Type}, {"Plocation", type text},
+        {"Dnum", Int64.Type}
+    }
+);
+
+shared WorksOn_Raw = CompanyCsv(
+    "works_on.csv",
+    {{"Essn", type text}, {"Pno", Int64.Type}, {"Hours", type number}}
+);
+
+shared Employees_Enriched =
+    let
+        AddressParts = Table.AddColumn(
+            Employees_Raw,
+            "AddressParts",
+            each
+                let
+                    Parts = Text.Split([Address], "-"),
+                    Count = List.Count(Parts)
+                in
+                    if Count = 4 then
+                        [
+                            AddressNumber = Parts{0},
+                            Street = Parts{1},
+                            City = Parts{2},
+                            State = Parts{3}
+                        ]
+                    else if Count = 5 then
+                        [
+                            AddressNumber = Parts{0},
+                            Street = Text.Combine({Parts{1}, Parts{2}}, " "),
+                            City = Parts{3},
+                            State = Parts{4}
+                        ]
+                    else
+                        [
+                            AddressNumber = null,
+                            Street = null,
+                            City = null,
+                            State = null
+                        ],
+            type record
+        ),
+        SplitAddress = Table.ExpandRecordColumn(
+            AddressParts,
+            "AddressParts",
+            {"AddressNumber", "Street", "City", "State"},
+            {"AddressNumber", "Street", "City", "State"}
+        ),
+        DepartmentJoin = Table.NestedJoin(
+            SplitAddress, {"Dno"}, Departments_Raw, {"Dnumber"},
+            "Department", JoinKind.LeftOuter
+        ),
+        DepartmentColumns = Table.ExpandTableColumn(
+            DepartmentJoin, "Department", {"Dname"}, {"DepartmentName"}
+        ),
+        ManagerJoin = Table.NestedJoin(
+            DepartmentColumns, {"Super_ssn"}, Employees_Raw, {"Ssn"},
+            "Manager", JoinKind.LeftOuter
+        ),
+        ManagerColumns = Table.ExpandTableColumn(
+            ManagerJoin, "Manager", {"Fname", "Lname"},
+            {"ManagerFirstName", "ManagerLastName"}
+        ),
+        EmployeeName = Table.AddColumn(
+            ManagerColumns, "EmployeeName",
+            each Text.Combine(List.Select({[Fname], [Lname]}, each _ <> null and _ <> ""), " "),
+            type text
+        ),
+        ManagerName = Table.AddColumn(
+            EmployeeName, "ManagerName",
+            each if [Super_ssn] = null
+                then "(Sem gerente - CEO)"
+                else Text.Combine(
+                    List.Select({[ManagerFirstName], [ManagerLastName]}, each _ <> null and _ <> ""),
+                    " "
+                ),
+            type text
+        ),
+        DepartmentMatch = Table.AddColumn(
+            ManagerName, "DepartmentMatch", each [DepartmentName] <> null, type logical
+        ),
+        SelectedColumns = Table.SelectColumns(
+            DepartmentMatch,
+            {
+                "Ssn", "EmployeeName", "Fname", "Minit", "Lname", "Bdate",
+                "AddressNumber", "Street", "City", "State", "Sex", "Salary",
+                "Super_ssn", "ManagerName", "Dno", "DepartmentName", "DepartmentMatch"
+            }
+        ),
+        Renamed = Table.RenameColumns(
+            SelectedColumns,
+            {
+                {"Ssn", "EmployeeSSN"}, {"Fname", "FirstName"},
+                {"Minit", "MiddleInitial"}, {"Lname", "LastName"},
+                {"Super_ssn", "SupervisorSSN"}, {"Dno", "DepartmentNumber"}
+            }
+        ),
+        Typed = Table.TransformColumnTypes(
+            Renamed,
+            {
+                {"EmployeeSSN", type text}, {"EmployeeName", type text},
+                {"FirstName", type text}, {"MiddleInitial", type text},
+                {"LastName", type text}, {"Bdate", type date},
+                {"AddressNumber", type text}, {"Street", type text},
+                {"City", type text}, {"State", type text}, {"Sex", type text},
+                {"Salary", type number}, {"SupervisorSSN", type text},
+                {"ManagerName", type text}, {"DepartmentNumber", Int64.Type},
+                {"DepartmentName", type text}, {"DepartmentMatch", type logical}
+            },
+            "en-US"
+        )
+    in
+        Typed;
+
+shared Department_Locations =
+    let
+        Joined = Table.NestedJoin(
+            DepartmentLocations_Raw, {"Dnumber"}, Departments_Raw, {"Dnumber"},
+            "Department", JoinKind.LeftOuter
+        ),
+        Expanded = Table.ExpandTableColumn(
+            Joined, "Department", {"Dname", "Mgr_ssn"},
+            {"DepartmentName", "ManagerSSN"}
+        ),
+        ManagerJoin = Table.NestedJoin(
+            Expanded, {"ManagerSSN"}, Employees_Raw, {"Ssn"},
+            "Manager", JoinKind.LeftOuter
+        ),
+        ManagerExpanded = Table.ExpandTableColumn(
+            ManagerJoin, "Manager", {"Fname", "Lname"},
+            {"ManagerFirstName", "ManagerLastName"}
+        ),
+        ManagerName = Table.AddColumn(
+            ManagerExpanded, "ManagerName",
+            each if [ManagerSSN] = null then null
+                else Text.Combine(
+                    List.Select({[ManagerFirstName], [ManagerLastName]}, each _ <> null and _ <> ""),
+                    " "
+                ),
+            type text
+        ),
+        LocationLabel = Table.AddColumn(
+            ManagerName, "DepartmentLocation",
+            each [DepartmentName] & " - " & [Dlocation],
+            type text
+        ),
+        CompositeKey = Table.AddColumn(
+            LocationLabel, "DepartmentLocationKey",
+            each Text.From([Dnumber], "en-US") & "|" & [Dlocation],
+            type text
+        ),
+        SelectedColumns = Table.SelectColumns(
+            CompositeKey,
+            {
+                "DepartmentLocationKey", "Dnumber", "DepartmentName",
+                "Dlocation", "DepartmentLocation", "ManagerName"
+            }
+        ),
+        Renamed = Table.RenameColumns(
+            SelectedColumns,
+            {{"Dnumber", "DepartmentNumber"}, {"Dlocation", "Location"}}
+        )
+    in
+        Renamed;
+
+shared Projects_Hours =
+    let
+        GroupedHours = Table.Group(
+            WorksOn_Raw,
+            {"Pno"},
+            {{"TotalHours", each List.Sum([Hours]), type number}}
+        ),
+        WithDepartment = Table.NestedJoin(
+            Projects_Raw, {"Dnum"}, Departments_Raw, {"Dnumber"},
+            "Department", JoinKind.LeftOuter
+        ),
+        DepartmentColumns = Table.ExpandTableColumn(
+            WithDepartment, "Department", {"Dname"}, {"DepartmentName"}
+        ),
+        WithHours = Table.NestedJoin(
+            DepartmentColumns, {"Pnumber"}, GroupedHours, {"Pno"},
+            "Hours", JoinKind.LeftOuter
+        ),
+        HoursColumn = Table.ExpandTableColumn(
+            WithHours, "Hours", {"TotalHours"}, {"TotalHours"}
+        ),
+        FillMissingHours = Table.ReplaceValue(
+            HoursColumn, null, 0, Replacer.ReplaceValue, {"TotalHours"}
+        ),
+        SelectedColumns = Table.SelectColumns(
+            FillMissingHours,
+            {
+                "Pnumber", "Pname", "Plocation", "Dnum",
+                "DepartmentName", "TotalHours"
+            }
+        ),
+        Renamed = Table.RenameColumns(
+            SelectedColumns,
+            {
+                {"Pnumber", "ProjectNumber"}, {"Pname", "ProjectName"},
+                {"Plocation", "ProjectLocation"}, {"Dnum", "DepartmentNumber"}
+            }
+        )
+    in
+        Renamed;
+
+shared Employees_By_Manager =
+    let
+        Grouped = Table.Group(
+            Employees_Raw,
+            {"Super_ssn"},
+            {{"DirectReports", each Table.RowCount(_), Int64.Type}}
+        ),
+        ManagerJoin = Table.NestedJoin(
+            Grouped, {"Super_ssn"}, Employees_Raw, {"Ssn"},
+            "Manager", JoinKind.LeftOuter
+        ),
+        Expanded = Table.ExpandTableColumn(
+            ManagerJoin, "Manager", {"Fname", "Lname"},
+            {"ManagerFirstName", "ManagerLastName"}
+        ),
+        ManagerName = Table.AddColumn(
+            Expanded, "ManagerName",
+            each if [Super_ssn] = null then "(Sem gerente - CEO)"
+                else Text.Combine(
+                    List.Select({[ManagerFirstName], [ManagerLastName]}, each _ <> null and _ <> ""),
+                    " "
+                ),
+            type text
+        ),
+        TopLevel = Table.AddColumn(
+            ManagerName, "IsTopLevelEmployee",
+            each [Super_ssn] = null, type logical
+        ),
+        ManagerKey = Table.TransformColumns(
+            TopLevel,
+            {{"Super_ssn", each if _ = null then "__NO_SUPERVISOR__" else _, type text}}
+        ),
+        Selected = Table.SelectColumns(
+            ManagerKey, {"Super_ssn", "ManagerName", "DirectReports", "IsTopLevelEmployee"}
+        ),
+        Renamed = Table.RenameColumns(Selected, {{"Super_ssn", "ManagerSSN"}})
+    in
+        Renamed;
+
+shared Quality_Checks =
+    let
+        EmployeeIds = List.Buffer(Employees_Raw[Ssn]),
+        MissingManagers = Table.RowCount(
+            Table.SelectRows(
+                Departments_Raw,
+                each [Mgr_ssn] = null or not List.Contains(EmployeeIds, [Mgr_ssn])
+            )
+        ),
+        EmployeesWithoutDepartment = Table.RowCount(
+            Table.SelectRows(Employees_Enriched, each not [DepartmentMatch])
+        ),
+        InvalidSupervisorLinks = Table.RowCount(
+            Table.SelectRows(
+                Employees_Raw,
+                each [Super_ssn] <> null and not List.Contains(EmployeeIds, [Super_ssn])
+            )
+        ),
+        NullSalaries = Table.RowCount(
+            Table.SelectRows(Employees_Raw, each [Salary] = null)
+        ),
+        BadAddresses = Table.RowCount(
+            Table.SelectRows(
+                Employees_Raw,
+                each
+                    let
+                        PartCount = List.Count(Text.Split([Address], "-"))
+                    in
+                        PartCount <> 4 and PartCount <> 5
+            )
+        ),
+        LocationKeys = Department_Locations[DepartmentLocationKey],
+        DuplicateLocations = List.Count(LocationKeys) - List.Count(List.Distinct(LocationKeys)),
+        ZeroHourAssignments = Table.RowCount(
+            Table.SelectRows(WorksOn_Raw, each [Hours] = 0)
+        ),
+        NegativeHourAssignments = Table.RowCount(
+            Table.SelectRows(WorksOn_Raw, each [Hours] < 0)
+        ),
+        Checks = #table(
+            type table [
+                Check = text, Observed = Int64.Type, Expected = text,
+                Status = text, Details = text
+            ],
+            {
+                {
+                    "Employees with no supervisor",
+                    Table.RowCount(Table.SelectRows(Employees_Raw, each [Super_ssn] = null)),
+                    "1 top-level employee (CEO)", "Expected",
+                    "The CEO is the only employee without a supervisor; keep this root row."
+                },
+                {
+                    "Departments without a valid manager",
+                    MissingManagers, "0", if MissingManagers = 0 then "Pass" else "Review",
+                    "Do not invent a department manager when the source has no gap."
+                },
+                {
+                    "Employees without a matching department",
+                    EmployeesWithoutDepartment, "0",
+                    if EmployeesWithoutDepartment = 0 then "Pass" else "Review",
+                    "Employees are preserved with a left outer department join."
+                },
+                {
+                    "Employees with an invalid supervisor reference",
+                    InvalidSupervisorLinks, "0",
+                    if InvalidSupervisorLinks = 0 then "Pass" else "Review",
+                    "The CEO null is expected and is not an invalid reference."
+                },
+                {
+                    "Employees with a null salary",
+                    NullSalaries, "0", if NullSalaries = 0 then "Pass" else "Review",
+                    "Salary is converted to the Decimal Number model type."
+                },
+                {
+                    "Malformed employee addresses",
+                    BadAddresses, "0", if BadAddresses = 0 then "Pass" else "Review",
+                    "Address is separated into number, street, city and state."
+                },
+                {
+                    "Duplicate department-location combinations",
+                    DuplicateLocations, "0",
+                    if DuplicateLocations = 0 then "Pass" else "Review",
+                    "Department number and location form a composite dimension key."
+                },
+                {
+                    "Project assignments with zero hours",
+                    ZeroHourAssignments, "Review source records", "Review",
+                    "Retain the source assignment and flag it rather than deleting it."
+                },
+                {
+                    "Project assignments with negative hours",
+                    NegativeHourAssignments, "0",
+                    if NegativeHourAssignments = 0 then "Pass" else "Review",
+                    "Negative hours require confirmation with the data owner."
+                }
+            }
+        )
+    in
+        Checks;

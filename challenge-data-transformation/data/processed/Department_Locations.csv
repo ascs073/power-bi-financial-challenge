@@ -1,0 +1,6 @@
+DepartmentLocationKey,DepartmentNumber,DepartmentName,Location,DepartmentLocation,ManagerName
+1|Houston,1,Headquarters,Houston,Headquarters - Houston,James Borg
+4|Stafford,4,Administration,Stafford,Administration - Stafford,Jennifer Wallace
+5|Bellaire,5,Research,Bellaire,Research - Bellaire,Franklin Wong
+5|Sugarland,5,Research,Sugarland,Research - Sugarland,Franklin Wong
+5|Houston,5,Research,Houston,Research - Houston,Franklin Wong

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "e8756006b51345629c80",
+  "displayName": "Departamentos e projetos",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

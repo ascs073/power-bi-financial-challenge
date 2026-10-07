@@ -34,3 +34,13 @@ O arquivo PBIX é a entrega editável caso a exportação para PowerPoint não e
 ## Origem
 
 O relatório e a amostra financeira têm como referência o repositório [power_bi_analyst](https://github.com/julianazanelatto/power_bi_analyst), em especial o material do desafio do Módulo 2. A terceira página foi preenchida para atender aos visuais solicitados.
+
+## Desafio — Processando e Transformando Dados com Power BI
+
+A entrega adicional está em [`challenge-data-transformation/`](./challenge-data-transformation/README.md). Ela inclui o projeto PBIP, os scripts Power Query, os dados de origem/processados e as verificações da base Company. Os desafios anteriores e seus arquivos continuam preservados.
+
+### Referências oficiais
+
+- [Instruções do desafio — arquivo DOCX](https://hermes.dio.me/files/assets/a8bf65e2-a503-46c9-9453-bd6bdf329e83.docx)
+- [Slides do desafio — arquivo PPTX](https://hermes.dio.me/files/assets/e7d723b3-fe92-42fa-b12c-cd33b56d81c8.pptx)
+- [Repositório de dados e scripts de referência](https://github.com/julianazanelatto/power_bi_analyst/tree/main/M%C3%B3dulo%203/Desafio%20de%20Projeto)

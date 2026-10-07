@@ -1,0 +1,5 @@
+ManagerSSN,ManagerName,DirectReports,IsTopLevelEmployee
+__NO_SUPERVISOR__,(Sem gerente - CEO),1,True
+333445555,Franklin Wong,3,False
+888665555,James Borg,2,False
+987654321,Jennifer Wallace,2,False

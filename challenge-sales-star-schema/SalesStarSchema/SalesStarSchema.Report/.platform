@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SalesStarSchema"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4a8aadd0-6a80-4ec8-9789-f1d549b20a73"
+  }
+}

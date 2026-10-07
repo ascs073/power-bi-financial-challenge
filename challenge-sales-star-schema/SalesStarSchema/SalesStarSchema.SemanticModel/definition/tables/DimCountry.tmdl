@@ -1,0 +1,65 @@
+table DimCountry
+	lineageTag: f43e0bd5-5def-40b4-a2d0-ddb7e8d8d3c7
+
+	column CountryKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: CountryKey
+		isKey
+
+	column CountryName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: CountryName
+
+	partition DimCountry = m
+		mode: import
+		queryGroup: Tables
+		source = ```
+			let
+			    DimDate = CsvTable(
+			        "DimDate.csv",
+			        {
+			            {"DateKey", Int64.Type}, {"Date", type date}, {"Year", Int64.Type},
+			            {"Quarter", type text}, {"MonthNumber", Int64.Type},
+			            {"MonthName", type text}, {"YearMonth", type text},
+			            {"YearMonthSort", Int64.Type}
+			        }
+			    ),
+			    DimProduct = CsvTable(
+			        "DimProduct.csv",
+			        {
+			            {"ProductKey", Int64.Type}, {"ProductName", type text},
+			            {"ManufacturingPrice", type number}
+			        }
+			    ),
+			    DimCountry = CsvTable(
+			        "DimCountry.csv",
+			        {{"CountryKey", Int64.Type}, {"CountryName", type text}}
+			    ),
+			    DimSegment = CsvTable(
+			        "DimSegment.csv",
+			        {{"SegmentKey", Int64.Type}, {"SegmentName", type text}}
+			    ),
+			    DimDiscountBand = CsvTable(
+			        "DimDiscountBand.csv",
+			        {{"DiscountBandKey", Int64.Type}, {"DiscountBand", type text}}
+			    ),
+			    FactSales = CsvTable(
+			        "FactSales.csv",
+			        {
+			            {"FactRowID", Int64.Type}, {"DateKey", Int64.Type},
+			            {"ProductKey", Int64.Type}, {"CountryKey", Int64.Type},
+			            {"SegmentKey", Int64.Type}, {"DiscountBandKey", Int64.Type},
+			            {"UnitsSold", type number}, {"ManufacturingPrice", type number},
+			            {"SalePrice", type number}, {"GrossSales", type number},
+			            {"Discounts", type number}, {"NetSales", type number},
+			            {"COGS", type number}, {"Profit", type number}
+			        }
+			    ),
+			    Result = DimCountry
+			in
+			    Result
+			```
+
+	annotation PBI_ResultType = Table

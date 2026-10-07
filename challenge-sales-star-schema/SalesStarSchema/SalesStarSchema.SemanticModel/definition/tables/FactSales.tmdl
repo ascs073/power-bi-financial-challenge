@@ -1,0 +1,157 @@
+table FactSales
+	lineageTag: 94f6058a-4bc5-4415-ad2e-612a015b1755
+
+	measure 'Total Sales' = SUM(FactSales[NetSales])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 6c466d21-cad4-443d-bce6-915abc108063
+
+	measure 'Gross Sales' = SUM(FactSales[GrossSales])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: dac73817-5881-472b-ac18-1af48e089dae
+
+	measure 'Total Discounts' = SUM(FactSales[Discounts])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 35132b75-aba1-47e2-8054-7c1a93213267
+
+	measure 'Total Profit' = SUM(FactSales[Profit])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: f1a51b04-cc77-49cd-968f-b7cf3dd60bc1
+
+	measure 'Units Sold' = SUM(FactSales[UnitsSold])
+		formatString: #,##0.0
+		lineageTag: 4337462b-f0d1-432e-96a8-745aef788cc1
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: 613cb87e-4e81-40a6-b4c2-8f3267bee4a7
+
+	column FactRowID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: FactRowID
+		isKey
+
+	column DateKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DateKey
+
+	column ProductKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column CountryKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: CountryKey
+
+	column SegmentKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: SegmentKey
+
+	column DiscountBandKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DiscountBandKey
+
+	column UnitsSold
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: UnitsSold
+		formatString: #,##0.0
+
+	column ManufacturingPrice
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: ManufacturingPrice
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column SalePrice
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: SalePrice
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column GrossSales
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: GrossSales
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column Discounts
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: Discounts
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column NetSales
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: NetSales
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column COGS
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: COGS
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column Profit
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: Profit
+		formatString: $#,##0.00;($#,##0.00);-
+
+	partition FactSales = m
+		mode: import
+		queryGroup: Tables
+		source = ```
+			let
+			    DimDate = CsvTable(
+			        "DimDate.csv",
+			        {
+			            {"DateKey", Int64.Type}, {"Date", type date}, {"Year", Int64.Type},
+			            {"Quarter", type text}, {"MonthNumber", Int64.Type},
+			            {"MonthName", type text}, {"YearMonth", type text},
+			            {"YearMonthSort", Int64.Type}
+			        }
+			    ),
+			    DimProduct = CsvTable(
+			        "DimProduct.csv",
+			        {
+			            {"ProductKey", Int64.Type}, {"ProductName", type text},
+			            {"ManufacturingPrice", type number}
+			        }
+			    ),
+			    DimCountry = CsvTable(
+			        "DimCountry.csv",
+			        {{"CountryKey", Int64.Type}, {"CountryName", type text}}
+			    ),
+			    DimSegment = CsvTable(
+			        "DimSegment.csv",
+			        {{"SegmentKey", Int64.Type}, {"SegmentName", type text}}
+			    ),
+			    DimDiscountBand = CsvTable(
+			        "DimDiscountBand.csv",
+			        {{"DiscountBandKey", Int64.Type}, {"DiscountBand", type text}}
+			    ),
+			    FactSales = CsvTable(
+			        "FactSales.csv",
+			        {
+			            {"FactRowID", Int64.Type}, {"DateKey", Int64.Type},
+			            {"ProductKey", Int64.Type}, {"CountryKey", Int64.Type},
+			            {"SegmentKey", Int64.Type}, {"DiscountBandKey", Int64.Type},
+			            {"UnitsSold", type number}, {"ManufacturingPrice", type number},
+			            {"SalePrice", type number}, {"GrossSales", type number},
+			            {"Discounts", type number}, {"NetSales", type number},
+			            {"COGS", type number}, {"Profit", type number}
+			        }
+			    ),
+			    Result = FactSales
+			in
+			    Result
+			```
+
+	annotation PBI_ResultType = Table

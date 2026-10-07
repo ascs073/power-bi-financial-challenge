@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "81eb30332896447d9f9b",
+  "position": {
+    "x": 1110,
+    "y": 18,
+    "z": 5,
+    "height": 105,
+    "width": 150,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimSegment"
+                  }
+                },
+                "Property": "SegmentName"
+              }
+            },
+            "queryRef": "DimSegment.SegmentName",
+            "nativeQueryRef": "SegmentName",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segmento'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

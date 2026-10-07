@@ -44,3 +44,7 @@ A entrega adicional está em [`challenge-data-transformation/`](./challenge-data
 - [Instruções do desafio — arquivo DOCX](https://hermes.dio.me/files/assets/a8bf65e2-a503-46c9-9453-bd6bdf329e83.docx)
 - [Slides do desafio — arquivo PPTX](https://hermes.dio.me/files/assets/e7d723b3-fe92-42fa-b12c-cd33b56d81c8.pptx)
 - [Repositório de dados e scripts de referência](https://github.com/julianazanelatto/power_bi_analyst/tree/main/M%C3%B3dulo%203/Desafio%20de%20Projeto)
+
+## Desafio — Dashboard de vendas com modelo estrela
+
+A nova entrega está em [`challenge-sales-star-schema/`](./challenge-sales-star-schema/README.md). Ela modela a Financial Sample com uma tabela `FactSales`, cinco dimensões relacionadas e um painel de vendas no Power BI. Para reconstruir os CSVs e o PBIP, execute `python scripts\build_star_schema.py` dentro dessa pasta.

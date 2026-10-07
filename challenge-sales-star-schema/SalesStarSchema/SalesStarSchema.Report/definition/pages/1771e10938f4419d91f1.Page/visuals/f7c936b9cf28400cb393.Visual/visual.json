@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "f7c936b9cf28400cb393",
+  "position": {
+    "x": 964,
+    "y": 410,
+    "z": 10,
+    "height": 280,
+    "width": 296,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "treemap",
+    "query": {
+      "queryState": {
+        "Group": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimDiscountBand"
+                  }
+                },
+                "Property": "DiscountBand"
+              }
+            },
+            "queryRef": "DimDiscountBand.DiscountBand",
+            "nativeQueryRef": "DiscountBand",
+            "active": true
+          }
+        ],
+        "Values": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "NetSales"
+              }
+            },
+            "queryRef": "FactSales.NetSales",
+            "nativeQueryRef": "NetSales",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Vendas por faixa de desconto'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

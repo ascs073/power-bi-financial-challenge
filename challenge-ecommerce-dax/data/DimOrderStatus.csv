@@ -1,0 +1,6 @@
+﻿OrderStatusKey,OrderStatus
+1,Entregue
+2,Enviado
+3,Em processamento
+4,Cancelado
+5,Reembolsado

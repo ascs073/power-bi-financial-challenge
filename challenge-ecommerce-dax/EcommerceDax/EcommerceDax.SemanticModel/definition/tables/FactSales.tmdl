@@ -1,0 +1,186 @@
+table FactSales
+	lineageTag: 3d87b15b-311a-40bb-bdc4-d880e7ed9419
+
+	measure 'Vendas Brutas' = SUM(FactSales[GrossAmount])
+		formatString: $#,##0.00;($#,##0.00);-
+		lineageTag: 1d1e0cf1-a825-41f7-8c2e-ffa1d7006803
+
+	measure 'Descontos' = SUM(FactSales[DiscountAmount])
+		formatString: $#,##0.00;($#,##0.00);-
+		lineageTag: d944a7dd-5867-4aa3-a184-a674c5959a6b
+
+	measure 'Vendas Líquidas' = CALCULATE(SUM(FactSales[NetAmount]), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado"))
+		formatString: $#,##0.00;($#,##0.00);-
+		lineageTag: 409e802c-0f9b-4bd7-a2f9-5bb900c6e6e3
+
+	measure 'Pedidos' = DISTINCTCOUNT(FactSales[OrderID])
+		formatString: #,##0
+		lineageTag: e624c5eb-7a37-4c32-be6a-4f0c5881f829
+
+	measure 'Pedidos Válidos' = CALCULATE(DISTINCTCOUNT(FactSales[OrderID]), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado"))
+		formatString: #,##0
+		lineageTag: 7a710451-56f5-4d2e-8080-138f9e747d70
+
+	measure 'Ticket Médio' = DIVIDE([Vendas Líquidas], [Pedidos Válidos])
+		formatString: $#,##0.00;($#,##0.00);-
+		lineageTag: b7f9d076-dff1-4205-82f0-edac21d0b0f0
+
+	measure 'Lucro' = CALCULATE(SUM(FactSales[Profit]), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado"))
+		formatString: $#,##0.00;($#,##0.00);-
+		lineageTag: de0ffd4e-5d20-4aad-bf52-4f9c80e00dae
+
+	measure 'Margem %' = DIVIDE([Lucro], [Vendas Líquidas])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: b075e9d4-4097-42f7-951e-a0d639428163
+
+	measure 'Unidades Vendidas' = CALCULATE(SUM(FactSales[Quantity]), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado"))
+		formatString: #,##0
+		lineageTag: 762aea6b-6d9f-4760-8057-fb4ad69622ed
+
+	measure 'Clientes' = CALCULATE(DISTINCTCOUNT(FactSales[CustomerKey]), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"), KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado"))
+		formatString: #,##0
+		lineageTag: c25cff05-3780-449f-b52d-bee7ed6f1aa0
+
+	measure 'Pedidos Cancelados' = CALCULATE(DISTINCTCOUNT(FactSales[OrderID]), KEEPFILTERS(DimOrderStatus[OrderStatus] = "Cancelado"))
+		formatString: #,##0
+		lineageTag: fc9e383c-6303-432d-86ce-3bfbce575573
+
+	measure 'Taxa de Cancelamento' = DIVIDE([Pedidos Cancelados], [Pedidos])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: 2ed8b7ba-e1c4-4bec-b77b-9849f0f242f8
+
+	measure 'Vendas Mês Anterior' = CALCULATE([Vendas Líquidas], DATEADD(DimDate[Date], -1, MONTH))
+		formatString: $#,##0.00;($#,##0.00);-
+		lineageTag: 5bba9052-ec94-42c4-968e-54ad3b8ef579
+
+	measure 'Variação Mensal %' = DIVIDE([Vendas Líquidas] - [Vendas Mês Anterior], [Vendas Mês Anterior])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: ebb4d769-cd1a-46ea-b7eb-42b2fab8d06e
+
+	column OrderItemKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: OrderItemKey
+		isKey
+
+	column OrderID
+		dataType: string
+		summarizeBy: none
+		sourceColumn: OrderID
+
+	column DateKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DateKey
+
+	column ProductKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column CustomerKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+	column PaymentMethodKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: PaymentMethodKey
+
+	column OrderStatusKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: OrderStatusKey
+
+	column GeographyKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: GeographyKey
+
+	column Quantity
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Quantity
+		formatString: #,##0
+
+	column UnitPrice
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: UnitPrice
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column GrossAmount
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: GrossAmount
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column DiscountAmount
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: DiscountAmount
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column NetAmount
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: NetAmount
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column UnitCost
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: UnitCost
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column Profit
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: Profit
+		formatString: $#,##0.00;($#,##0.00);-
+
+	partition FactSales = m
+		mode: import
+		queryGroup: Tables
+		source = ```
+			let
+			    DimDate = CsvTable("DimDate.csv", {
+			    {"DateKey", Int64.Type}, {"Date", type date}, {"Year", Int64.Type},
+			    {"MonthNumber", Int64.Type}, {"MonthName", type text}, {"YearMonth", type text},
+			    {"YearMonthSort", Int64.Type}
+			}),
+			    DimProduct = CsvTable("DimProduct.csv", {
+			    {"ProductKey", Int64.Type}, {"ProductName", type text},
+			    {"Category", type text}, {"UnitCost", Currency.Type}, {"ListPrice", Currency.Type}
+			}),
+			    DimCustomer = CsvTable("DimCustomer.csv", {
+			    {"CustomerKey", Int64.Type}, {"CustomerCode", type text},
+			    {"CustomerType", type text}
+			}),
+			    DimPaymentMethod = CsvTable("DimPaymentMethod.csv", {
+			    {"PaymentMethodKey", Int64.Type}, {"PaymentMethod", type text}
+			}),
+			    DimOrderStatus = CsvTable("DimOrderStatus.csv", {
+			    {"OrderStatusKey", Int64.Type}, {"OrderStatus", type text}
+			}),
+			    DimGeography = CsvTable("DimGeography.csv", {
+			    {"GeographyKey", Int64.Type}, {"StateCode", type text},
+			    {"StateName", type text}, {"Region", type text}
+			}),
+			    FactSales = CsvTable("FactSales.csv", {
+			    {"OrderItemKey", Int64.Type}, {"OrderID", type text},
+			    {"DateKey", Int64.Type}, {"ProductKey", Int64.Type},
+			    {"CustomerKey", Int64.Type}, {"PaymentMethodKey", Int64.Type},
+			    {"OrderStatusKey", Int64.Type}, {"GeographyKey", Int64.Type},
+			    {"Quantity", Int64.Type}, {"UnitPrice", Currency.Type},
+			    {"GrossAmount", Currency.Type}, {"DiscountAmount", Currency.Type},
+			    {"NetAmount", Currency.Type}, {"UnitCost", Currency.Type},
+			    {"Profit", Currency.Type}
+			}),
+			    Result = FactSales
+			in
+			    Result
+			```
+
+	annotation PBI_ResultType = Table

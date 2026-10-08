@@ -1,0 +1,16 @@
+﻿ProductKey,ProductCode,ProductName,Category,UnitCost,ListPrice
+1,PROD-001,Smartphone Pro,Celulares,4499.90,6299.90
+2,PROD-002,Smartphone Plus,Celulares,2799.90,3899.90
+3,PROD-003,Smartphone Essencial,Celulares,1199.90,1799.90
+4,PROD-004,Notebook Ultrafino,Informática,3899.90,5499.90
+5,PROD-005,Notebook Gamer,Informática,5299.90,7499.90
+6,PROD-006,Tablet 10,Informática,1099.90,1699.90
+7,PROD-007,Monitor 27,Informática,899.90,1399.90
+8,PROD-008,Fone Bluetooth,Áudio,249.90,499.90
+9,PROD-009,Caixa de Som,Áudio,379.90,699.90
+10,PROD-010,Fone Premium,Áudio,799.90,1299.90
+11,PROD-011,Smartwatch,Wearables,699.90,1199.90
+12,PROD-012,Pulseira Inteligente,Wearables,169.90,329.90
+13,PROD-013,Carregador USB-C,Acessórios,49.90,119.90
+14,PROD-014,Capa Protetora,Acessórios,24.90,79.90
+15,PROD-015,Power Bank,Acessórios,119.90,249.90

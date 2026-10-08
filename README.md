@@ -48,3 +48,7 @@ A entrega adicional está em [`challenge-data-transformation/`](./challenge-data
 ## Desafio — Dashboard de vendas com modelo estrela
 
 A nova entrega está em [`challenge-sales-star-schema/`](./challenge-sales-star-schema/README.md). Ela modela a Financial Sample com uma tabela `FactSales`, cinco dimensões relacionadas e um painel de vendas no Power BI. Para reconstruir os CSVs e o PBIP, execute `python scripts\build_star_schema.py` dentro dessa pasta.
+
+## Desafio — Dashboard de e-commerce com DAX
+
+A nova entrega está em [`challenge-ecommerce-dax/`](./challenge-ecommerce-dax/README.md). Inclui modelo estrela, medidas DAX e um painel interativo de e-commerce. Como o workspace local não contém uma base transacional real, os dados são sintéticos, reproduzíveis e identificados como demonstrativos.

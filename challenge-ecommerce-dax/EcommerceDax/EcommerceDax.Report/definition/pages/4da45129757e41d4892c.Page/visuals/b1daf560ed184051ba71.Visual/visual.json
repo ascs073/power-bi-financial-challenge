@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b1daf560ed184051ba71",
+  "position": {
+    "x": 974,
+    "y": 142,
+    "z": 8,
+    "height": 250,
+    "width": 286,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimOrderStatus"
+                  }
+                },
+                "Property": "OrderStatus"
+              }
+            },
+            "queryRef": "DimOrderStatus.OrderStatus",
+            "nativeQueryRef": "OrderStatus",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Pedidos"
+              }
+            },
+            "queryRef": "FactSales.Pedidos",
+            "nativeQueryRef": "Pedidos",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Pedidos por status'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "1813ad882f434daf95cc",
+  "position": {
+    "x": 1120,
+    "y": 22,
+    "z": 5,
+    "height": 100,
+    "width": 140,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimOrderStatus"
+                  }
+                },
+                "Property": "OrderStatus"
+              }
+            },
+            "queryRef": "DimOrderStatus.OrderStatus",
+            "nativeQueryRef": "OrderStatus",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Status do pedido'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+model EcommerceDax
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Parameters
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Tables
+	annotation PBI_QueryGroupOrder = 1
+
+ref table DimDate
+ref table DimProduct
+ref table DimCustomer
+ref table DimPaymentMethod
+ref table DimOrderStatus
+ref table DimGeography
+ref table FactSales
+
+relationship FactSales_DimDate_DateKey
+	fromColumn: FactSales.DateKey
+	toColumn: DimDate.DateKey
+	crossFilteringBehavior: oneDirection
+	isActive: true
+
+relationship FactSales_DimProduct_ProductKey
+	fromColumn: FactSales.ProductKey
+	toColumn: DimProduct.ProductKey
+	crossFilteringBehavior: oneDirection
+	isActive: true
+
+relationship FactSales_DimCustomer_CustomerKey
+	fromColumn: FactSales.CustomerKey
+	toColumn: DimCustomer.CustomerKey
+	crossFilteringBehavior: oneDirection
+	isActive: true
+
+relationship FactSales_DimPaymentMethod_PaymentMethodKey
+	fromColumn: FactSales.PaymentMethodKey
+	toColumn: DimPaymentMethod.PaymentMethodKey
+	crossFilteringBehavior: oneDirection
+	isActive: true
+
+relationship FactSales_DimOrderStatus_OrderStatusKey
+	fromColumn: FactSales.OrderStatusKey
+	toColumn: DimOrderStatus.OrderStatusKey
+	crossFilteringBehavior: oneDirection
+	isActive: true
+
+relationship FactSales_DimGeography_GeographyKey
+	fromColumn: FactSales.GeographyKey
+	toColumn: DimGeography.GeographyKey
+	crossFilteringBehavior: oneDirection
+	isActive: true

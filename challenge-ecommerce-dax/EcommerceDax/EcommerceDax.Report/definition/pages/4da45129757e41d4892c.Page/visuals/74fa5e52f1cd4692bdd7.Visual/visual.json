@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "74fa5e52f1cd4692bdd7",
+  "position": {
+    "x": 24,
+    "y": 22,
+    "z": 0,
+    "height": 100,
+    "width": 220,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Vendas Líquidas"
+              }
+            },
+            "queryRef": "FactSales.Vendas Líquidas",
+            "nativeQueryRef": "Vendas Líquidas",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Receita líquida'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

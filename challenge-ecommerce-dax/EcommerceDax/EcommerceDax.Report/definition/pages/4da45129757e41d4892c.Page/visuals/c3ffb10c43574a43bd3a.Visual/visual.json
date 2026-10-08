@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "c3ffb10c43574a43bd3a",
+  "position": {
+    "x": 664,
+    "y": 142,
+    "z": 7,
+    "height": 250,
+    "width": 290,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimProduct"
+                  }
+                },
+                "Property": "Category"
+              }
+            },
+            "queryRef": "DimProduct.Category",
+            "nativeQueryRef": "Category",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Vendas Líquidas"
+              }
+            },
+            "queryRef": "FactSales.Vendas Líquidas",
+            "nativeQueryRef": "Vendas Líquidas",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Receita por categoria'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

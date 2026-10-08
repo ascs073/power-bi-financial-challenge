@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "4dffaccba08d42f7a98c",
+  "position": {
+    "x": 24,
+    "y": 410,
+    "z": 9,
+    "height": 280,
+    "width": 610,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimGeography"
+                  }
+                },
+                "Property": "StateCode"
+              }
+            },
+            "queryRef": "DimGeography.StateCode",
+            "nativeQueryRef": "StateCode",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Vendas Líquidas"
+              }
+            },
+            "queryRef": "FactSales.Vendas Líquidas",
+            "nativeQueryRef": "Vendas Líquidas",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Receita por estado'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

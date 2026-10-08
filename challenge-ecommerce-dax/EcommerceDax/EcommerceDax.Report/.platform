@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "EcommerceDax"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "032d7ae7-ac82-4f92-99df-cae4bbda15b8"
+  }
+}

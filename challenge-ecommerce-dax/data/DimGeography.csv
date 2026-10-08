@@ -1,0 +1,15 @@
+﻿GeographyKey,StateCode,StateName,Region
+1,SP,São Paulo,Sudeste
+2,RJ,Rio de Janeiro,Sudeste
+3,MG,Minas Gerais,Sudeste
+4,ES,Espírito Santo,Sudeste
+5,PR,Paraná,Sul
+6,SC,Santa Catarina,Sul
+7,RS,Rio Grande do Sul,Sul
+8,BA,Bahia,Nordeste
+9,PE,Pernambuco,Nordeste
+10,CE,Ceará,Nordeste
+11,GO,Goiás,Centro-Oeste
+12,DF,Distrito Federal,Centro-Oeste
+13,AM,Amazonas,Norte
+14,PA,Pará,Norte

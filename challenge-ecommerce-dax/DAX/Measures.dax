@@ -1,0 +1,58 @@
+Vendas Brutas = SUM(FactSales[GrossAmount])
+
+Descontos = SUM(FactSales[DiscountAmount])
+
+Vendas Líquidas =
+CALCULATE(
+    SUM(FactSales[NetAmount]),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado")
+)
+
+Pedidos = DISTINCTCOUNT(FactSales[OrderID])
+
+Pedidos Válidos =
+CALCULATE(
+    DISTINCTCOUNT(FactSales[OrderID]),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado")
+)
+
+Ticket Médio = DIVIDE([Vendas Líquidas], [Pedidos Válidos])
+
+Lucro =
+CALCULATE(
+    SUM(FactSales[Profit]),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado")
+)
+
+Margem % = DIVIDE([Lucro], [Vendas Líquidas])
+
+Unidades Vendidas =
+CALCULATE(
+    SUM(FactSales[Quantity]),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado")
+)
+
+Clientes =
+CALCULATE(
+    DISTINCTCOUNT(FactSales[CustomerKey]),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Cancelado"),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] <> "Reembolsado")
+)
+
+Pedidos Cancelados =
+CALCULATE(
+    DISTINCTCOUNT(FactSales[OrderID]),
+    KEEPFILTERS(DimOrderStatus[OrderStatus] = "Cancelado")
+)
+
+Taxa de Cancelamento = DIVIDE([Pedidos Cancelados], [Pedidos])
+
+Vendas Mês Anterior =
+CALCULATE([Vendas Líquidas], DATEADD(DimDate[Date], -1, MONTH))
+
+Variação Mensal % =
+DIVIDE([Vendas Líquidas] - [Vendas Mês Anterior], [Vendas Mês Anterior])

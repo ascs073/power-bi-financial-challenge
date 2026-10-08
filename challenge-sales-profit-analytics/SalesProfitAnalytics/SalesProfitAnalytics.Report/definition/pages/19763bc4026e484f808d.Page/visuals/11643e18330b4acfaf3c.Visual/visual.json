@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "11643e18330b4acfaf3c",
+  "position": {
+    "x": 434,
+    "y": 402,
+    "z": 9,
+    "height": 284,
+    "width": 390,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimDiscountBand"
+                  }
+                },
+                "Property": "DiscountBand"
+              }
+            },
+            "queryRef": "DimDiscountBand.DiscountBand",
+            "nativeQueryRef": "DiscountBand",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Discounts"
+              }
+            },
+            "queryRef": "FactSales.Total Discounts",
+            "nativeQueryRef": "Total Discounts",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Descontos por faixa'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

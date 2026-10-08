@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "dfa100b9eed04b91948e",
+  "position": {
+    "x": 240,
+    "y": 18,
+    "z": 1,
+    "height": 86,
+    "width": 202,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Profit Margin %"
+              }
+            },
+            "queryRef": "FactSales.Profit Margin %",
+            "nativeQueryRef": "Profit Margin %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Margem de lucro'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "c0a4d22f7adf43ec85c5",
+  "position": {
+    "x": 240,
+    "y": 18,
+    "z": 1,
+    "height": 86,
+    "width": 202,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Profit MoM Change %"
+              }
+            },
+            "queryRef": "FactSales.Profit MoM Change %",
+            "nativeQueryRef": "Profit MoM Change %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Variação mensal de lucro'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

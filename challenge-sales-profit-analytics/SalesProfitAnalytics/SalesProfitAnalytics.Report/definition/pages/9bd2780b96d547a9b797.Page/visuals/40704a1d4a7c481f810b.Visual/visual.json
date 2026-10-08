@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "40704a1d4a7c481f810b",
+  "position": {
+    "x": 672,
+    "y": 18,
+    "z": 3,
+    "height": 86,
+    "width": 202,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Profit YoY Change %"
+              }
+            },
+            "queryRef": "FactSales.Profit YoY Change %",
+            "nativeQueryRef": "Profit YoY Change %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Variação anual de lucro'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

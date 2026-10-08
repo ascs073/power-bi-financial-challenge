@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "d941acd3d3aa4c06ae3c",
+  "position": {
+    "x": 456,
+    "y": 18,
+    "z": 2,
+    "height": 86,
+    "width": 202,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Sales YoY Change %"
+              }
+            },
+            "queryRef": "FactSales.Sales YoY Change %",
+            "nativeQueryRef": "Sales YoY Change %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Variação anual de vendas'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "0bc0ed83b24542468176",
+  "position": {
+    "x": 24,
+    "y": 18,
+    "z": 0,
+    "height": 86,
+    "width": 202,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Sales MoM Change %"
+              }
+            },
+            "queryRef": "FactSales.Sales MoM Change %",
+            "nativeQueryRef": "Sales MoM Change %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Variação mensal de vendas'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

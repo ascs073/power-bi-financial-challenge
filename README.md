@@ -56,3 +56,7 @@ A nova entrega está em [`challenge-ecommerce-dax/`](./challenge-ecommerce-dax/R
 ## Desafio — Dashboard gerencial para tomada de decisões
 
 A nova entrega está em [`challenge-managerial-dashboard/`](./challenge-managerial-dashboard/README.md). Ela usa a Financial Sample e organiza o relatório em três páginas: resumo executivo, rentabilidade e mercados/portfólio. A construção considera as referências visuais e o arquivo de instruções disponíveis na pasta local indicada.
+
+## Desafio — Relatório de vendas e lucros com Data Analytics
+
+A entrega está em [`challenge-sales-profit-analytics/`](./challenge-sales-profit-analytics/README.md). O projeto Power BI organiza três páginas analíticas — Vendas, Lucros e Análise do período — com medidas DAX, visuais de comparação e navegação entre páginas.

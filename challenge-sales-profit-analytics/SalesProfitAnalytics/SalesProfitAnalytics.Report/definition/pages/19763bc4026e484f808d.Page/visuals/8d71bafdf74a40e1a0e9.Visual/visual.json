@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "8d71bafdf74a40e1a0e9",
+  "position": {
+    "x": 24,
+    "y": 402,
+    "z": 8,
+    "height": 284,
+    "width": 390,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "treemap",
+    "query": {
+      "queryState": {
+        "Group": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimCountry"
+                  }
+                },
+                "Property": "CountryName"
+              }
+            },
+            "queryRef": "DimCountry.CountryName",
+            "nativeQueryRef": "CountryName",
+            "active": true
+          }
+        ],
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Profit"
+              }
+            },
+            "queryRef": "FactSales.Total Profit",
+            "nativeQueryRef": "Total Profit",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Lucro por país'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

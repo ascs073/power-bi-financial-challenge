@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "fa6482698447460a901e",
+  "position": {
+    "x": 654,
+    "y": 148,
+    "z": 7,
+    "height": 228,
+    "width": 606,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimSegment"
+                  }
+                },
+                "Property": "SegmentName"
+              }
+            },
+            "queryRef": "DimSegment.SegmentName",
+            "nativeQueryRef": "SegmentName",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Profit Margin %"
+              }
+            },
+            "queryRef": "FactSales.Profit Margin %",
+            "nativeQueryRef": "Profit Margin %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Margem por segmento'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

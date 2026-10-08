@@ -1,0 +1,22 @@
+expression DataFolder =
+		"C:\Users\oem\Desktop\pbidados\power-bi-financial-challenge\challenge-managerial-dashboard\data" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: b7d5c384-56a0-4f07-b863-b46b39c58e81
+	queryGroup: Parameters
+	annotation PBI_NavigationStepName = Navigation
+	annotation PBI_ResultType = Text
+
+expression CsvTable =
+		(fileName as text, columnTypes as list) as table =>
+		    let
+		        Source = Csv.Document(
+		            File.Contents(DataFolder & "\" & fileName),
+		            [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+		        ),
+		        Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+		        Typed = Table.TransformColumnTypes(Headers, columnTypes, "en-US")
+		    in
+		        Typed
+	lineageTag: e8786847-38b3-42b8-9446-4169dd1c3963
+	queryGroup: Tables
+	annotation PBI_NavigationStepName = Navigation
+	annotation PBI_ResultType = Function

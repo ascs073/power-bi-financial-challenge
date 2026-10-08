@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "49cf6678728541b4a581",
+  "position": {
+    "x": 444,
+    "y": 116,
+    "z": 21,
+    "height": 26,
+    "width": 392,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "actionButton",
+    "query": {
+      "queryState": {}
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Rentabilidade'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualLink": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'PageNavigation'"
+                }
+              }
+            },
+            "navigationSection": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ReportSectionbf5835ea17124876a040'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "93a1e9f78f414ab28d24",
+  "position": {
+    "x": 498,
+    "y": 20,
+    "z": 2,
+    "height": 88,
+    "width": 225,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Discounts"
+              }
+            },
+            "queryRef": "FactSales.Total Discounts",
+            "nativeQueryRef": "Total Discounts",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Descontos concedidos'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

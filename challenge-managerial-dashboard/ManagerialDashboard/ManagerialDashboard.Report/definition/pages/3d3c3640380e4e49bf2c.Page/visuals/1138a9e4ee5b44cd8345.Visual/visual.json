@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "1138a9e4ee5b44cd8345",
+  "position": {
+    "x": 834,
+    "y": 148,
+    "z": 8,
+    "height": 238,
+    "width": 426,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimSegment"
+                  }
+                },
+                "Property": "SegmentName"
+              }
+            },
+            "queryRef": "DimSegment.SegmentName",
+            "nativeQueryRef": "SegmentName",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Sales"
+              }
+            },
+            "queryRef": "FactSales.Total Sales",
+            "nativeQueryRef": "Total Sales",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Vendas por segmento'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

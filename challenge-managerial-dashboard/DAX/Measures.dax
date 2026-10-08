@@ -1,0 +1,47 @@
+Total Sales = SUM(FactSales[NetSales])
+
+Gross Sales = SUM(FactSales[GrossSales])
+
+Total Profit = SUM(FactSales[Profit])
+
+Profit Margin % = DIVIDE([Total Profit], [Total Sales])
+
+Units Sold = SUM(FactSales[UnitsSold])
+
+Total Discounts = SUM(FactSales[Discounts])
+
+Discount Rate % = DIVIDE([Total Discounts], [Gross Sales])
+
+Sales per Unit = DIVIDE([Total Sales], [Units Sold])
+
+Sales Previous Month =
+CALCULATE([Total Sales], DATEADD(DimDate[Date], -1, MONTH))
+
+Sales MoM Change =
+[Total Sales] - [Sales Previous Month]
+
+Sales MoM Change % =
+DIVIDE([Sales MoM Change], [Sales Previous Month])
+
+Sales Previous Year =
+CALCULATE([Total Sales], SAMEPERIODLASTYEAR(DimDate[Date]))
+
+Sales YoY Change % =
+DIVIDE([Total Sales] - [Sales Previous Year], [Sales Previous Year])
+
+Profit Previous Year =
+CALCULATE([Total Profit], SAMEPERIODLASTYEAR(DimDate[Date]))
+
+Profit YoY Change % =
+DIVIDE([Total Profit] - [Profit Previous Year], [Profit Previous Year])
+
+Profit Share % =
+DIVIDE(
+    [Total Profit],
+    CALCULATE(
+        [Total Profit],
+        REMOVEFILTERS(DimProduct),
+        REMOVEFILTERS(DimSegment),
+        REMOVEFILTERS(DimCountry)
+    )
+)

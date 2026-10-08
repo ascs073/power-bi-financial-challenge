@@ -1,0 +1,197 @@
+table FactSales
+	lineageTag: 4097dc73-1e95-4851-8b1e-a84ffb582547
+
+	measure 'Total Sales' = SUM(FactSales[NetSales])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 5b33234c-4452-4269-b9a8-677647c2fed1
+
+	measure 'Gross Sales' = SUM(FactSales[GrossSales])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 343d414c-32eb-43da-b0ac-1e453c98eebc
+
+	measure 'Total Profit' = SUM(FactSales[Profit])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: d5156ee3-b793-4fc3-b9ff-e010611bffa6
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: c012720e-c8f7-47ce-a833-031d25300e2d
+
+	measure 'Units Sold' = SUM(FactSales[UnitsSold])
+		formatString: #,##0.0
+		lineageTag: d570db95-baf4-4fd9-8bc8-b2adcf28aec8
+
+	measure 'Total Discounts' = SUM(FactSales[Discounts])
+		formatString: $#,##0;($#,##0);-
+		lineageTag: de80b9f6-3174-4c63-9603-3f19412016f1
+
+	measure 'Discount Rate %' = DIVIDE([Total Discounts], [Gross Sales])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: 93a99e18-1d56-4f75-9205-2cca08c36c8c
+
+	measure 'Sales per Unit' = DIVIDE([Total Sales], [Units Sold])
+		formatString: $#,##0.00
+		lineageTag: 5a301ae1-af36-4966-8543-62cd80ca7591
+
+	measure 'Sales Previous Month' = CALCULATE([Total Sales], DATEADD(DimDate[Date], -1, MONTH))
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 74efbb26-a691-4882-89cf-cad16e5f6ec2
+
+	measure 'Sales MoM Change' = [Total Sales] - [Sales Previous Month]
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 49e05b03-16fe-4e9e-9129-099cd59854ae
+
+	measure 'Sales MoM Change %' = DIVIDE([Sales MoM Change], [Sales Previous Month])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: 026f826e-10a7-463c-91cb-52c07dea346b
+
+	measure 'Sales Previous Year' = CALCULATE([Total Sales], SAMEPERIODLASTYEAR(DimDate[Date]))
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 53669705-d32f-4fce-834e-7bd4719027a0
+
+	measure 'Sales YoY Change %' = DIVIDE([Total Sales] - [Sales Previous Year], [Sales Previous Year])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: 06d15638-5f00-464a-b7ab-68802872bbea
+
+	measure 'Profit Previous Year' = CALCULATE([Total Profit], SAMEPERIODLASTYEAR(DimDate[Date]))
+		formatString: $#,##0;($#,##0);-
+		lineageTag: 96405029-346b-472b-917a-79414534dd8a
+
+	measure 'Profit YoY Change %' = DIVIDE([Total Profit] - [Profit Previous Year], [Profit Previous Year])
+		formatString: 0.0%;(0.0%);-
+		lineageTag: 9ed7433a-06f2-4d05-9522-d50173df398a
+
+	measure 'Profit Share %' = DIVIDE([Total Profit], CALCULATE([Total Profit], REMOVEFILTERS(DimProduct), REMOVEFILTERS(DimSegment), REMOVEFILTERS(DimCountry)))
+		formatString: 0.0%;(0.0%);-
+		lineageTag: f9dbd469-8ecf-4a13-a033-d38c8d21b732
+
+	column FactRowID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: FactRowID
+		isKey
+
+	column DateKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DateKey
+
+	column ProductKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column CountryKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: CountryKey
+
+	column SegmentKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: SegmentKey
+
+	column DiscountBandKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DiscountBandKey
+
+	column UnitsSold
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: UnitsSold
+		formatString: #,##0.0
+
+	column ManufacturingPrice
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: ManufacturingPrice
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column SalePrice
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: SalePrice
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column GrossSales
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: GrossSales
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column Discounts
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: Discounts
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column NetSales
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: NetSales
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column COGS
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: COGS
+		formatString: $#,##0.00;($#,##0.00);-
+
+	column Profit
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: Profit
+		formatString: $#,##0.00;($#,##0.00);-
+
+	partition FactSales = m
+		mode: import
+		queryGroup: Tables
+		source = ```
+			let
+			    DimDate = CsvTable(
+			        "DimDate.csv",
+			        {
+			            {"DateKey", Int64.Type}, {"Date", type date}, {"Year", Int64.Type},
+			            {"Quarter", type text}, {"MonthNumber", Int64.Type},
+			            {"MonthName", type text}, {"YearMonth", type text},
+			            {"YearMonthSort", Int64.Type}
+			        }
+			    ),
+			    DimProduct = CsvTable(
+			        "DimProduct.csv",
+			        {
+			            {"ProductKey", Int64.Type}, {"ProductName", type text},
+			            {"ManufacturingPrice", type number}
+			        }
+			    ),
+			    DimCountry = CsvTable(
+			        "DimCountry.csv",
+			        {{"CountryKey", Int64.Type}, {"CountryName", type text}}
+			    ),
+			    DimSegment = CsvTable(
+			        "DimSegment.csv",
+			        {{"SegmentKey", Int64.Type}, {"SegmentName", type text}}
+			    ),
+			    DimDiscountBand = CsvTable(
+			        "DimDiscountBand.csv",
+			        {{"DiscountBandKey", Int64.Type}, {"DiscountBand", type text}}
+			    ),
+			    FactSales = CsvTable(
+			        "FactSales.csv",
+			        {
+			            {"FactRowID", Int64.Type}, {"DateKey", Int64.Type},
+			            {"ProductKey", Int64.Type}, {"CountryKey", Int64.Type},
+			            {"SegmentKey", Int64.Type}, {"DiscountBandKey", Int64.Type},
+			            {"UnitsSold", type number}, {"ManufacturingPrice", type number},
+			            {"SalePrice", type number}, {"GrossSales", type number},
+			            {"Discounts", type number}, {"NetSales", type number},
+			            {"COGS", type number}, {"Profit", type number}
+			        }
+			    ),
+			    Result = FactSales
+			in
+			    Result
+			```
+
+	annotation PBI_ResultType = Table

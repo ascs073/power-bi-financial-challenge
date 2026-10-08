@@ -52,3 +52,7 @@ A nova entrega está em [`challenge-sales-star-schema/`](./challenge-sales-star-
 ## Desafio — Dashboard de e-commerce com DAX
 
 A nova entrega está em [`challenge-ecommerce-dax/`](./challenge-ecommerce-dax/README.md). Inclui modelo estrela, medidas DAX e um painel interativo de e-commerce. Como o workspace local não contém uma base transacional real, os dados são sintéticos, reproduzíveis e identificados como demonstrativos.
+
+## Desafio — Dashboard gerencial para tomada de decisões
+
+A nova entrega está em [`challenge-managerial-dashboard/`](./challenge-managerial-dashboard/README.md). Ela usa a Financial Sample e organiza o relatório em três páginas: resumo executivo, rentabilidade e mercados/portfólio. A construção considera as referências visuais e o arquivo de instruções disponíveis na pasta local indicada.

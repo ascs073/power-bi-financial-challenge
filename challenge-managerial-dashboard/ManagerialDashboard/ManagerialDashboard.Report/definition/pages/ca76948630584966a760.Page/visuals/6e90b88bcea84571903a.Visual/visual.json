@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "6e90b88bcea84571903a",
+  "position": {
+    "x": 720,
+    "y": 20,
+    "z": 3,
+    "height": 88,
+    "width": 220,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Sales per Unit"
+              }
+            },
+            "queryRef": "FactSales.Sales per Unit",
+            "nativeQueryRef": "Sales per Unit",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Vendas por unidade'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

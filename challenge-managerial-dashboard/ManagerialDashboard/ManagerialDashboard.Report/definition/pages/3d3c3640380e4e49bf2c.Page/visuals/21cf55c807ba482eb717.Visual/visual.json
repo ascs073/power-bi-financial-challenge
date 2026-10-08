@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "21cf55c807ba482eb717",
+  "position": {
+    "x": 675,
+    "y": 20,
+    "z": 3,
+    "height": 88,
+    "width": 205,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Units Sold"
+              }
+            },
+            "queryRef": "FactSales.Units Sold",
+            "nativeQueryRef": "Units Sold",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Unidades vendidas'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

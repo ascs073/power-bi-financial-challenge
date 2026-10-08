@@ -1,0 +1,91 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "001d34ee2db14818b5a2",
+  "position": {
+    "x": 24,
+    "y": 396,
+    "z": 8,
+    "height": 290,
+    "width": 610,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimDate"
+                  }
+                },
+                "Property": "YearMonth"
+              }
+            },
+            "queryRef": "DimDate.YearMonth",
+            "nativeQueryRef": "YearMonth",
+            "active": true
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Sales"
+              }
+            },
+            "queryRef": "FactSales.Total Sales",
+            "nativeQueryRef": "Total Sales",
+            "active": true
+          },
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Profit"
+              }
+            },
+            "queryRef": "FactSales.Total Profit",
+            "nativeQueryRef": "Total Profit",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Vendas e lucro por mês'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

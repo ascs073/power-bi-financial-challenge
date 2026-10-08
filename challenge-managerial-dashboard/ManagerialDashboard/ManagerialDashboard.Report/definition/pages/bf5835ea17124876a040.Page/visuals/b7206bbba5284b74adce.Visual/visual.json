@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b7206bbba5284b74adce",
+  "position": {
+    "x": 735,
+    "y": 20,
+    "z": 3,
+    "height": 88,
+    "width": 225,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Discount Rate %"
+              }
+            },
+            "queryRef": "FactSales.Discount Rate %",
+            "nativeQueryRef": "Discount Rate %",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Taxa de desconto'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

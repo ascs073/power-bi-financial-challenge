@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "d911ddb9935e4d55bf24",
+  "position": {
+    "x": 654,
+    "y": 148,
+    "z": 7,
+    "height": 228,
+    "width": 606,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "treemap",
+    "query": {
+      "queryState": {
+        "Group": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimProduct"
+                  }
+                },
+                "Property": "ProductName"
+              }
+            },
+            "queryRef": "DimProduct.ProductName",
+            "nativeQueryRef": "ProductName",
+            "active": true
+          }
+        ],
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "Total Profit"
+              }
+            },
+            "queryRef": "FactSales.Total Profit",
+            "nativeQueryRef": "Total Profit",
+            "active": true
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Lucro por produto'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
